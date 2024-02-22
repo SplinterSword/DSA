@@ -1,0 +1,1 @@
+//Inheritance of multiple type of inheritance in the same inheritance chain.
