@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 
 /*
@@ -10,70 +11,53 @@ worst case=O(n^2)
 
 //space complexity=O(n);
 
-int partition(int *arr,int s,int e)
-{
-    int pivot=arr[s];
 
-    int count=0;
-    for(int i=s+1;i<=e;i++)
-    {
-        if(arr[i]<=pivot)
-        {
-            count++;
+void quickSort(vector<int> &arr,int start, int end){
+    if (start >= end){
+        return;
+    }
+    int pivot = end;
+    int i = start;
+    int j = end;
+
+    // Handling elements
+    while (i!=j){
+        if (arr[i] < arr[pivot]){
+            i++;
+            continue;
         }
+
+        j--;
+        swap(arr[i],arr[j]);
     }
 
-    //place pivot in the right index
-    int pivotIndex=s+count;
-    swap(arr[pivotIndex],arr[s]);
+    // Putting Piviot in right place
+    swap(arr[j],arr[pivot]);
 
-    //left and right wala part smbhal leta hai
-    int i=s,j=e;
-    while(i<pivotIndex && j>pivotIndex)
-    {
-        while(arr[i]<pivot)
-        {
-            i++;   
-        }
-        while(arr[j]>pivot)
-        {
-            j--;   
-        }
-        while(i<pivotIndex && j>pivotIndex)
-        {
-            swap(arr[i++],arr[j--]);
-        }
-    }
+    //left part
+    quickSort(arr,start,i-1);
 
-    return pivotIndex;
+    //right part
+    quickSort(arr,i+1,end);
+    return;
 }
 
-void quicksort(int *arr,int s,int e)
-{
-    //base case
-    if (s>=e)
-    {
-        return ;
+int main(){
+    int n;
+    cin >> n;
+    vector<int> arr;
+
+    for (int i=0 ;i<n;i++){
+        int element;
+        cin>>element;
+        arr.push_back(element);
     }
 
-    //partition kara
-    int p=partition(arr,s,e);
+    quickSort(arr,0,arr.size()-1);
 
-    //left wala part
-    quicksort(arr,s,p-1);
-
-    //right wala part
-    quicksort(arr,p+1,e);
-}
-
-int main()
-{
-    int arr[6]={3,5,1,8,2,4};
-    quicksort(arr,0,5);
-    for(int i=0;i<6;i++)
-    {
-        cout<<arr[i]<<" ";
+    for (int i=0 ;i<n;i++){
+        cout << arr[i] << " ";
     }
-    cout<<endl;
+
     return 0;
 }
