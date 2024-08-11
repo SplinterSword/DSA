@@ -1,6 +1,7 @@
 // Shortest Path algorithm like Digkstra's Algorithms
 // Unlike Digkstra's Algorithm also works on negetive weights
 // But doesn't work with negetive cycle so it can be used to wheter the negetive cycle exist or not
+// T.C. = O(V*E)
 
 #include <bits/stdc++.h>
 
