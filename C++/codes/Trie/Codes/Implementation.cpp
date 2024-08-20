@@ -1,108 +1,116 @@
-#include <iostream>
-using namespace std;
+// Implementation of Trie
+// https://leetcode.com/problems/implement-trie-prefix-tree/description/?envType=study-plan-v2&envId=top-interview-150
 
-class TrieNode
-{
+class TrieNode {
 public:
-    char data;
-    TrieNode *children[26];
-    bool isTerminal;
+    char value;
+    TrieNode* children[256];
+    bool terminal;
 
-    TrieNode(char ch)
-    {
-        data = ch;
-        for (int i = 0; i < 26; i++)
-        {
+    TrieNode(char data) {
+        
+        value = data;
+
+        for (int i=0;i<256;i++) {
             children[i] = NULL;
         }
-        isTerminal = false;
+
+        terminal = false;
     }
 };
 
-class Trie
-{
-public:
-    TrieNode *root;
+void insertinTrie(TrieNode* root, string word, int index) {
 
-    Trie()
-    {
+    if (index == word.size()){
+        root->terminal = true;
+        return;
+    }
+
+    char character = word[index];
+    int characterIndex = character - '0';
+
+    // Already Present in the trie
+    if (root->children[characterIndex] != NULL){
+        insertinTrie(root->children[characterIndex], word, index+1);
+        return;
+    }
+
+    // Not Present In the Trie
+    TrieNode* newNode = new TrieNode(character);
+    root->children[characterIndex] = newNode;
+    insertinTrie(root->children[characterIndex], word, index+1);
+    return;
+}
+
+bool searchinTrie(TrieNode* root, string word, int index) {
+
+    if (root == NULL) {
+        return false;
+    }
+
+    if (index == word.size()){
+        return root->terminal;
+    }
+
+    char character = word[index];
+    int characterIndex = character - '0';
+
+    // Already Present in the trie
+    if (root->children[characterIndex] != NULL){
+        return searchinTrie(root->children[characterIndex], word, index+1);  
+    }
+
+    // Not Present In the Trie
+    return false;
+}
+
+bool startsWithinTrie(TrieNode* root, string word, int index) {
+
+    if (root == NULL) {
+        return false;
+    }
+
+    if (index == word.size()){
+        return true;
+    }
+
+    char character = word[index];
+    int characterIndex = character - '0';
+
+    // Already Present in the trie
+    if (root->children[characterIndex] != NULL){
+        return startsWithinTrie(root->children[characterIndex], word, index+1);  
+    }
+
+    // Not Present In the Trie
+    return false;
+}
+
+class Trie {
+private:
+    TrieNode* root;
+public:
+    Trie() {
         root = new TrieNode('\0');
     }
-
-    //T.C. = O(l) l = length of the word
-    void insertUtil(TrieNode *root, string word)
-    {
-        // base case
-        if (word.length() == 0)
-        {
-            root->isTerminal = true;
-            return;
-        }
-
-        // assumption, word will be in CAPS
-        int index = word[0] - 'A';
-        TrieNode *child;
-
-        if (root->children[index] != NULL)
-        {
-            // present
-            child = root->children[index];
-        }
-        else
-        {
-            // absent
-            child = new TrieNode(word[0]);
-            root->children[index] = child;
-        }
-
-        // RECURSION
-        insertUtil(child, word.substr(1));
+    
+    void insert(string word) {
+        insertinTrie(root,word,0);
     }
-
-    void insertWord(string word)
-    {
-        insertUtil(root, word);
+    
+    bool search(string word) {
+        return searchinTrie(root,word,0);
     }
-
-    //T.C. = O(l) l = length of the word
-    bool searchUtil(TrieNode *root, string word)
-    {
-        // base case
-        if (word.length() == 0)
-        {
-            return root->isTerminal;
-        }
-
-        int index = word[0] - 'A';
-        TrieNode *child;
-
-        if (root->children[index] != NULL)
-        {
-            // present
-            child = root->children[index];
-        }
-        else
-        {
-            // absent
-            return false;
-        }
-
-        // Recursion
-        return searchUtil(child, word.substr(1));
-    }
-
-    bool searchWord(string word)
-    {
-        return searchUtil(root, word);
+    
+    bool startsWith(string prefix) {
+        return startsWithinTrie(root,prefix,0);
     }
 };
 
-int main()
-{
-    Trie *t = new Trie();
-
-    t->insertWord("abcd");
-
-    cout << t->searchWord("abcd") << endl;
-    return 0;
-}
+/**
+ * Your Trie object will be instantiated and called as such:
+ * Trie* obj = new Trie();
+ * obj->insert(word);
+ * bool param_2 = obj->search(word);
+ * bool param_3 = obj->startsWith(prefix);
+ */
