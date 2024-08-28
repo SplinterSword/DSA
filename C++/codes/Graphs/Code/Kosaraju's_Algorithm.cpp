@@ -1,71 +1,72 @@
-// https://www.naukri.com/code360/problems/count-strongly-connected-components-kosaraju-s-algorithm_1171151?leftPanelTab=0
-// T.C. = O(V+E)
-// S.C. = O(V+E)
-
 #include <bits/stdc++.h>
+using namespace std;
 
-void TopoLogicalSort(unordered_map<int,list<int>> &adjList,vector<bool> &visited, int node, queue<int> &q) {
-	visited[node] = true;
+void TopoLogicalSort(unordered_map<int, list<int>> &adjList, vector<bool> &visited, int node, stack<int> &s) {
+    visited[node] = true;
 
-	for (auto neighbour: adjList[node]) {
-		if (!visited[neighbour]) {
-			TopoLogicalSort(adjList, visited, neighbour, q)
-		}
-	}
+    for (auto neighbour: adjList[node]) {
+        if (!visited[neighbour]) {
+            TopoLogicalSort(adjList, visited, neighbour, s);
+        }
+    }
 
-	q.push(node);
-} 
+    s.push(node);
+}
 
-void dfs(unordered_map<int,list<int>> &adjList,vector<bool> &visited, int node) {
-	visited[node] = true;
+void dfs(unordered_map<int, list<int>> &adjList, vector<bool> &visited, int node) {
+    visited[node] = true;
 
-	for (auto neighbour: adjList[node]) {
-		if (!visited[neighbour]) {
-			TopoLogicalSort(adjList, visited, neighbour, q)
-		}
-	}
-}  
+    for (auto neighbour: adjList[node]) {
+        if (!visited[neighbour]) {
+            dfs(adjList, visited, neighbour);
+        }
+    }
+}
 
-int stronglyConnectedComponents(int v, vector<vector<int>> &edges)
-{
-	unordered_map<int,list<int>> adjList;
+int stronglyConnectedComponents(int v, vector<vector<int>> &edges) {
+    unordered_map<int, list<int>> adjList;
 
-	for (int i=0;i<edges.size();i++) {
-		int u = edges[i][0];
-		int v = edges[i][1];
+    // Build the original graph
+    for (int i = 0; i < edges.size(); i++) {
+        int u = edges[i][0];
+        int v = edges[i][1];
+        adjList[u].push_back(v);
+    }
 
-		// Directed Graph
-		adjList[u].push_back(v);
-	}
+    // TopoLogical Sort using a stack
+    stack<int> s;
+    vector<bool> visited(v, false);
 
-	// TopoLogical Sort
-	// we are using queue instead of stack to avoid transposing the graph later on
-	queue<int> q;
-	vector<bool> visited(v,0);
+    for (int i = 0; i < v; i++) {
+        if (!visited[i]) {
+            TopoLogicalSort(adjList, visited, i, s);
+        }
+    }
 
-	for (int i=0;i<v;i++){
-		if (!visited[i]) {
-			TopoLogicalSort(adjList,visited,i,q);
-		}
-	}
+    // Transpose the graph
+    unordered_map<int, list<int>> transposeAdjList;
 
-	// Reset the visited to use again
-	for (int i=0;i<v;i++){
-		visited[i] = 0;
-	}
+    for (int i = 0; i < v; i++) {
+        for (auto neighbour : adjList[i]) {
+            transposeAdjList[neighbour].push_back(i);
+        }
+    }
 
-	// Dfs Reversed;
-	int ans = 0;
+    // Reset visited to use again
+    fill(visited.begin(), visited.end(), false);
 
-	while (!q.empty()) {
-		int front = q.front();
-		q.pop();
+    // Perform DFS on the transposed graph in the order defined by the stack
+    int ans = 0;
 
-		if (!visited[front]) {
-			dfs(adjList, visited, node);
-			ans++;
-		}
-	}
+    while (!s.empty()) {
+        int node = s.top();
+        s.pop();
 
-	return ans;
+        if (!visited[node]) {
+            dfs(transposeAdjList, visited, node);
+            ans++;
+        }
+    }
+
+    return ans;
 }
