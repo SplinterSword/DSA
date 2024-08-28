@@ -12,11 +12,6 @@
 
 using namespace std;
 
-#include <unordered_map>
-#include <list>
-#include <queue>
-
-
 void makeAdjList(vector<vector<int>>& edges, unordered_map<int,list<int>> &adjList){
     for (int i=0;i<edges.size();i++){
         int u = edges[i][0];
