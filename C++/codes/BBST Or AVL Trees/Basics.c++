@@ -64,7 +64,7 @@ void update(AVLTreeNode* root) {
     int leftHeight = root -> left == nullptr ? -1 : root -> left -> height;
     int rightHeight = root -> right == nullptr ? -1 : root -> right -> height;
     root -> height = max(leftHeight, rightHeight) + 1;
-    root -> balance = leftHeight - rightHeight;
+    root -> balance = rightHeight - leftHeight;
 }
 
 AVLTreeNode* rightRotate(AVLTreeNode* root) {
