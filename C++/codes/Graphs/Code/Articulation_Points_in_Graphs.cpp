@@ -6,11 +6,11 @@
 // Also added another condition after the loop ended to handle the condition of the source node (parent = -1)
 
 #include <bits/stdc++.h>
+using namespace std;
 
-class ArticulationPoint [
+class ArticulationPoint {
     private:
-
-        void dfs(unordered_map<int,list<int>> &adjList, vector<int> &parent, vector<bool> &visited, vector<int> &dist, vector<int> &low, int node, int &counter, vector<vector<int>> &ans) {
+        void dfs(unordered_map<int,list<int>> &adjList, vector<int> &parent, vector<bool> &visited, vector<int> &dist, vector<int> &low, int node, int &counter, vector<int> &ans) {
             visited[node] = true;
             dist[node] = counter;
             low[node] = counter;
@@ -59,8 +59,8 @@ class ArticulationPoint [
 
             int counter = 0;
 
-            dfs(adjList,dist,low,visited,parent,0,counter,ans);
+            dfs(adjList,parent,visited,dist,low,0,counter,ans);
 
             return ans;
         }
-]
+};
