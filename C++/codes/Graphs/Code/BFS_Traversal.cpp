@@ -25,6 +25,7 @@ void bfs(vector<vector<int>> &adj, unordered_map<int, bool> &visited, int node, 
         }
     }
 }
+
 vector<int> bfsTraversal(int n, vector<vector<int>> &adj){
     
     vector<int> ans;

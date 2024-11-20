@@ -3,6 +3,7 @@
 // S.C. = O(N)   (linear)
 
 #include <bits/stdc++.h> 
+using namespace std;
 
 void makeAdjList(vector<vector<int>> &edges, unordered_map<int,list<int>> &adjList, vector<int> &indegree){
     for (int i=0;i<edges.size();i++){

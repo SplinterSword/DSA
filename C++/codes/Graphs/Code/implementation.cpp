@@ -10,7 +10,6 @@ class graph {
     private:
         unordered_map<int,list<int>> adjList;
     public:
-
         void addEdgeList(int u,int v,bool direction){
             // direction = 0 for undirected
             // direction = 1 for directd graph

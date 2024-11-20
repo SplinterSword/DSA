@@ -2,7 +2,9 @@
 // T.C. = O(N+E) (linear)
 // S.C. = O(N)   (linear)
 
-#include <bits/stdc++.h> 
+#include <bits/stdc++.h>
+using namespace std;
+
 void makeAdjList(vector<vector<int>> &edges, unordered_map<int,list<int>> &adjList){
     for (int i=0;i<edges.size();i++){
         int u = edges[i][0];

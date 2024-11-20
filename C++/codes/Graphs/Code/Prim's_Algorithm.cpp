@@ -5,7 +5,9 @@
 
 // https://www.naukri.com/code360/problems/prim-s-mst_1095633?topList=love-babbar-dsa-sheet-problems&leftPanelTab=0&leftPanelTabValue=PROBLEM
 
-#include <bits/stdc++.h> 
+#include <bits/stdc++.h>
+using namespace std;
+
 vector<pair<pair<int, int>, int>> calculatePrimsMST(int n, int m, vector<pair<pair<int, int>, int>> &g)
 {
     unordered_map<int,list<pair<int,int>>> adjList;

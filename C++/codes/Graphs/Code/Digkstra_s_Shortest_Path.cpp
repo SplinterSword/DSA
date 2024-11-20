@@ -2,7 +2,9 @@
 // T.C. = O(ElogV) where E = edges and v = vertices
 // S.C. = O(N+E)
 
-#include <bits/stdc++.h> 
+#include <bits/stdc++.h>
+using namespace std;
+
 vector<int> dijkstra(vector<vector<int>> &vec, int vertices, int edges, int source) {
     unordered_map<int,list<pair<int,int>>> adjList;
 
