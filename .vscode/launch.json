@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/splintersword/Documents/Learning Material/DSA/C++/codes/Segment Tree",
-      "program": "/home/splintersword/Documents/Learning Material/DSA/C++/codes/Segment Tree/build/Debug/outDebug",
+      "cwd": "/home/splintersword/Documents/Learning Material/DSA/C++/codes/Fenwick Tree",
+      "program": "/home/splintersword/Documents/Learning Material/DSA/C++/codes/Fenwick Tree/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
