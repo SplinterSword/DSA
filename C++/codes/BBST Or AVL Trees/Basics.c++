@@ -181,6 +181,13 @@ int main () {
     AVLTreeNode *root = nullptr;
 
     root = insert(root, 10);
-
-    cout << deleteValue(root, 10) << "\n";
+    root = insert(root, 20);
+    root = insert(root, 30);
+    root = insert(root, 40);
+    root = insert(root, 50);
+    root = insert(root, 25);
+    
+    root = deleteNode(root, 25);
+    
+    cout << root -> data << "\n";
 }
